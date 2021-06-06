@@ -20,3 +20,8 @@ run from terminal
 ```bash
 acode
 ```
+
+
+### todo
+
+- allow param passing to support many types
