@@ -7,14 +7,14 @@ const generateAuthCode = () => {
   return notp.gen(base32.decode(process.env.E2E_TEST_ONE_TIME_PASSWORD_KEY));
 };
 
-const copyToClipboard = async (code) => {
-  await clipboardy.writeSync(code);
+const copyToClipboard = (code) => {
+  clipboardy.writeSync(code);
 };
 
-const go = async () => {
+const go = () => {
   const code = generateAuthCode();
   console.log(`auth code: ${code}`);
-  await copyToClipboard(code);
+  copyToClipboard(code);
 };
 
 go();
