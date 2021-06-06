@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 var notp = require("notp").totp;
 const base32 = require("thirty-two");
 const clipboardy = require("clipboardy");
