@@ -9,13 +9,13 @@ copies current 2fa code to the clipboard
 export E2E_TEST_ONE_TIME_PASSWORD_KEY=SOME_SECRET_CODE
 ```
 
-* link the command
+* link the command (from within the project)
 
 ```bash
 [yarn|npm] link
 ```
 
-run from terminal
+run from terminal (this should now be available system-wide)
 
 ```bash
 acode
