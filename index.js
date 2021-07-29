@@ -13,7 +13,7 @@ const copyToClipboard = (code) => {
 
 const go = () => {
   const code = generateAuthCode();
-  console.log(`auth code: ${code}`);
+  console.log(`auth code: ${code} copied to clipboard`);
   copyToClipboard(code);
 };
 
