@@ -9,10 +9,16 @@ copies current 2fa code to the clipboard
 export E2E_TEST_ONE_TIME_PASSWORD_KEY=SOME_SECRET_CODE
 ```
 
-* link the command (from within the project)
+* install globally
 
 ```bash
-[yarn|npm] link
+yarn global install
+```
+
+or
+
+```bash
+npm i -g
 ```
 
 run from terminal (this should now be available system-wide)
