@@ -27,7 +27,6 @@ run from terminal (this should now be available system-wide)
 acode
 ```
 
-
 ### todo
 
-- allow param passing to support many types
+* allow param passing to support many types
