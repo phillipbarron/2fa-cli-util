@@ -1,5 +1,5 @@
 {
-  "name": "login-keygen",
+  "name": "2fa-cli",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
