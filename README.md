@@ -30,3 +30,5 @@ acode
 ### todo
 
 * allow param passing to support many types
+* allow selection of some option
+* allow fetching of keys from secret manager or similar
