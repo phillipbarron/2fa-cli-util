@@ -12,13 +12,13 @@ export E2E_TEST_ONE_TIME_PASSWORD_KEY=SOME_SECRET_CODE
 * install globally
 
 ```bash
-yarn global install
+ yarn global add 2fa-cli-util
 ```
 
 or
 
 ```bash
-npm i -g
+npm i -g 2fa-cli-util
 ```
 
 run from terminal (this should now be available system-wide)
