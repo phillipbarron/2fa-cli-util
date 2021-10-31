@@ -39,8 +39,13 @@ const showPasscode = (key) => {
 
 const go = async () => {
   welcome();
-  const { k, a, r } = argv;
+  const { k, a, r, h, help } = argv;
   const configExists = hasExistingConfig();
+  if (help) {
+    return console.log(
+      '\n Usage: \n\t acode [Options] \n\t Options:\n\t\t-a Add Key\n\t\t-k [Key Name] get code for named key\n\t\t-r [Key Name] Remove named Key'
+    );
+  }
   if (a) {
     return addKey();
   }
