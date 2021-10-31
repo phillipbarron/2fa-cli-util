@@ -41,9 +41,9 @@ const go = async () => {
   welcome();
   const { k, a, r, h, help } = argv;
   const configExists = hasExistingConfig();
-  if (help) {
+  if (help ||  h) {
     return console.log(
-      '\n Usage: \n\t acode [Options] \n\t Options:\n\t\t-a Add Key\n\t\t-k [Key Name] get code for named key\n\t\t-r [Key Name] Remove named Key'
+      '\n Usage: \n\t acode [Options] \n\t Options:\n\t\t-a Add Key\n\t\t-k [Key Name] get code for named key\n\t\t-r [Key Name] Remove named Key\n'
     );
   }
   if (a) {
