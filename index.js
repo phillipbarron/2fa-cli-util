@@ -32,7 +32,7 @@ const showPasscode = (key) => {
   console.log(
     `auth code: ${code} copied to clipboard (valid for ${remainingValidity} second${
       remainingValidity !== 1 ? 's' : ''
-    })`
+    })\n`
   );
   copyToClipboard(code);
 };
@@ -51,11 +51,12 @@ const go = async () => {
   }
   if (k) {
     if (configExists) {
-      const key = getItem(k);
-      if (key) {
+      const item = getItem(k);
+      if (item) {
+        const { key } = item;
         return showPasscode(key)
       } else {
-        console.log(`not entry found for ${key}`);
+        console.log(`no item with label ${k} is currently configured`);
       }
     }
   }
