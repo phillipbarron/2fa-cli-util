@@ -11,7 +11,7 @@ copies current 2fa code to the clipboard
     Options:
         -a Add Key
         -k [Key Name] get code for named key
-        -r [Key Name] Remove named Key
+        -r [Key Name] Remove named key
 ```
 
 * install globally
