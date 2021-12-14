@@ -1,0 +1,12 @@
+{
+    "keys" : [
+      {
+        "keyLabel": "BBC Login",
+        "key": "YOUR_SECRET_KEY"
+      },
+      {
+        "keyLabel": "Github",
+        "key": "YOUR_SECRET_KEY"
+      }
+    ]
+}

@@ -1,17 +1,22 @@
 {
   "name": "2fa-cli-util",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
     "go": "node index.js"
   },
   "dependencies": {
+    "chalk": "^4.1.2",
+    "clear": "^0.1.0",
     "clipboardy": "^2.3.0",
+    "figlet": "^1.5.2",
+    "inquirer": "^8.2.0",
+    "minimist": "^1.2.5",
     "notp": "^2.0.3",
     "thirty-two": "^1.0.2"
   },
-  "bin" : {
+  "bin": {
     "acode": "./index.js"
   }
 }
