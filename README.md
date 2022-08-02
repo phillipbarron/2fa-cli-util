@@ -34,4 +34,4 @@ acode
 
 ### todo
 
-* allow fetching of keys from secret manager or similar
+* allow fetching / synchronisation of keys from secret manager or similar
