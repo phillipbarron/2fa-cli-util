@@ -1,26 +1,26 @@
-const fs = require('fs');
-const inquirer = require('inquirer');
+const fs = require("fs");
+const inquirer = require("inquirer");
 
 const CONFIG_FILE_PATH = `${process.env.HOME}/.2fa-cli-util`;
 
 const confirmAction = async (message) => {
   const { userChoice } = await inquirer.prompt([
     {
-      type: 'list',
-      name: 'userChoice',
+      type: "list",
+      name: "userChoice",
       message,
-      choices: ['Yes', 'No'],
+      choices: ["Yes", "No"],
     },
   ]);
-  return userChoice === 'Yes';
+  return userChoice === "Yes";
 };
 
 const updateConfigFile = async (config = {}) => {
   try {
     await fs.writeFileSync(CONFIG_FILE_PATH, JSON.stringify(config));
-    console.log('config updated successfully');
+    console.log("config updated successfully");
   } catch (error) {
-    console.log('failed to update config with error', error);
+    console.log("failed to update config with error", error);
   }
 };
 
@@ -28,7 +28,7 @@ const hasExistingConfig = () => {
   try {
     return fs.existsSync(CONFIG_FILE_PATH);
   } catch (error) {
-    console.log('a bad thing happened checking config file:', error);
+    console.log("a bad thing happened checking config file:", error);
     throw error;
   }
 };
@@ -44,20 +44,25 @@ const addItemToConfig = async (configItem) => {
   if (hasExistingConfig()) {
     const existingConfig = getConfig();
     const isExistingItem = existingConfig.keys.some(
-      (item) => item.keyLabel === configItem.keyLabel
+      (item) =>
+        item.keyLabel.toLowerCase() === configItem.keyLabel.toLowerCase()
     );
     if (isExistingItem) {
       const overwriteExistingItem = await confirmAction(
-        'This will overwrite the existing key. Continue?'
+        "This will overwrite the existing key. Continue?"
       );
-      if (overwriteExistingItem) {
-        console.log('No changes made to existing config');
+      if (!overwriteExistingItem) {
+        console.log("No changes made to existing config");
         return;
       }
     }
+    const configItemsToRetain = existingConfig.keys.filter(
+      ({ keyLabel }) =>
+        keyLabel.toLowerCase() !== configItem.keyLabel.toLowerCase()
+    );
     return updateConfigFile({
       ...existingConfig,
-      ...{ keys: [...existingConfig.keys, configItem] },
+      ...{ keys: [...configItemsToRetain, configItem] },
     });
   }
   return updateConfigFile({
@@ -69,7 +74,7 @@ const removeItemFromConfig = async (configItem) => {
   if (hasExistingConfig()) {
     const existingConfig = getConfig();
     const isExistingItem = existingConfig.keys.some(
-      (item) => item.keyLabel === configItem
+      (item) => item.keyLabel.toLowerCase() === configItem.toLowerCase()
     );
     if (isExistingItem) {
       const removeKey = await confirmAction(
@@ -80,17 +85,19 @@ const removeItemFromConfig = async (configItem) => {
           ...existingConfig,
           ...{
             keys: existingConfig.keys.filter(
-              (key) => key.keyLabel !== configItem
+              (key) => key.keyLabel.toLowerCase() !== configItem.toLowerCase()
             ),
           },
         });
       } else {
-        console.log('No changes made to existing config');
+        console.log("No changes made to existing config");
         return;
       }
     }
   }
-  console.log('done nout');
+  console.log(
+    `there is no "${configItem}" set. No changes made to configuration`
+  );
 };
 
 const getItems = () => {
@@ -100,7 +107,9 @@ const getItems = () => {
 
 const getItem = (itemLabel) => {
   const { keys } = getConfig();
-  return keys.find((key) => key.keyLabel === itemLabel);
+  return keys.find(
+    (key) => key.keyLabel.toLowerCase() === itemLabel.toLowerCase()
+  );
 };
 
 const getDefaultItem = () => {
