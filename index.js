@@ -37,19 +37,27 @@ const showPasscode = (key) => {
   copyToClipboard(code);
 };
 
+const showUsage = () => console.log(
+  '\n Usage: \n\t acode [Options] \n\t Options:\n\t\t-a Add key\n\t\t-k [Key name] Get code for named key\n\t\t-r [Key name] Remove named key\n'
+);
+
 const go = async () => {
-  welcome();
   const { k, a, r, h, help } = argv;
   const configExists = hasExistingConfig();
-  if (help ||  h) {
-    return console.log(
-      '\n Usage: \n\t acode [Options] \n\t Options:\n\t\t-a Add Key\n\t\t-k [Key Name] get code for named key\n\t\t-r [Key Name] Remove named Key\n'
-    );
+  
+  if (help || h) {
+    return showUsage();
   }
+
   if (a) {
     return addKey();
   }
+
   if (k) {
+    if (typeof k !== "string") {
+      console.log(`no key value provided`);
+      return showUsage();
+    }
     if (configExists) {
       const item = getItem(k);
       if (item) {
@@ -62,6 +70,10 @@ const go = async () => {
   }
 
   if (r) {
+    if (typeof r !== "string") {
+      console.log(`no key value provided for removal`);
+      return showUsage();
+    }
     if (configExists) {
       return removeItemFromConfig(r);
     } else {
@@ -70,6 +82,7 @@ const go = async () => {
   }
 
   if (hasExistingConfig() && getItems().length > 0) {
+    welcome();
     const item = await selectKey();
     showPasscode(item);
   } else {
