@@ -1,11 +1,10 @@
 import inquirer from 'inquirer';
 import { yellow } from 'chalk';
 import { textSync } from 'figlet';
+import { getItemLabels, getItem, addItemToConfig } from './config-manager';
 
-const { getItems, getItem, addItemToConfig } = require('./config-manager');
-
-const selectKey = async () => {
-  const choices = await getItems();
+const selectKey = async (): Promise<string> => {
+  const choices: string[] = getItemLabels();
   const { key: keyLabel } = await inquirer.prompt([
     {
       type: 'list',

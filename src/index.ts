@@ -7,7 +7,7 @@ import {
   hasExistingConfig,
   getItem,
   removeItemFromConfig,
-  getItems,
+  getItemLabels,
   confirmAction,
 } from './config-manager';
 import decode from './lib/thirty-two';
@@ -83,7 +83,7 @@ const go = async () => {
     }
   }
 
-  if (hasExistingConfig() && getItems().length > 0) {
+  if (hasExistingConfig() && getItemLabels().length > 0) {
     welcome();
     const item = await selectKey();
     showPasscode(item);

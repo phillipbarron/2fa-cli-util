@@ -109,7 +109,7 @@ const removeItemFromConfig = async (configItemLabel: string) => {
   );
 };
 
-const getItems = () => {
+const getItemLabels = (): string[] => {
   const { keys } = getConfig();
   return keys.map((key) => key.keyLabel);
 };
@@ -127,7 +127,7 @@ export {
   addItemToConfig,
   removeItemFromConfig,
   getItem,
-  getItems,
+  getItemLabels,
   updateConfigFile,
   confirmAction,
 };
