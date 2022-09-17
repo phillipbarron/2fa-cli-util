@@ -35,3 +35,7 @@ acode
 ### todo
 
 * allow fetching / synchronisation of keys from secret manager or similar
+
+### need to extract existing keys from Google auth?
+
+[try this](https://github.com/krissrex/google-authenticator-exporter)

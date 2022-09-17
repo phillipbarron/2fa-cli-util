@@ -1,7 +1,6 @@
-const inquirer = require('inquirer');
-const chalk = require('chalk');
-const clear = require('clear');
-const figlet = require('figlet');
+import inquirer from 'inquirer';
+import { yellow } from 'chalk';
+import { textSync } from 'figlet';
 
 const { getItems, getItem, addItemToConfig } = require('./config-manager');
 
@@ -11,7 +10,7 @@ const selectKey = async () => {
     {
       type: 'list',
       name: 'key',
-      message: 'What do you want a code for?',
+      message: 'Select key',
       choices: [...choices],
     },
   ]);
@@ -21,10 +20,10 @@ const selectKey = async () => {
 
 
 const welcome = () => {
-  clear();
+  console.clear();
   console.log(
-    chalk.yellow.bgBlack(
-      figlet.textSync('2fa-cli-util')
+    yellow.bgBlack(
+      textSync('2fa-cli-util')
     )
   )
 }
@@ -57,7 +56,7 @@ const addKey = async () => {
 };
 
 
-module.exports = {
+export {
   addKey,
   selectKey,
   welcome,

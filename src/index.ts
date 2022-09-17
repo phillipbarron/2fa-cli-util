@@ -1,32 +1,34 @@
 #!/usr/bin/env node
-var notp = require('notp').totp;
-const base32 = require('thirty-two');
-const clipboardy = require('clipboardy');
-const { selectKey, addKey, welcome } = require('./src/menu');
-const {
+import { totp } from 'notp';
+import { writeSync } from 'clipboardy';
+import minimist = require('minimist');
+import { selectKey, addKey, welcome } from './menu';
+import {
   hasExistingConfig,
   getItem,
   removeItemFromConfig,
   getItems,
   confirmAction,
-} = require('./src/config-manager');
-const { getRemainingValiditySeconds } = require('./src/auth-util');
+} from './config-manager';
+import decode from './lib/thirty-two';
 
-var argv = require('minimist')(process.argv.slice(2));
+import { getRemainingValiditySeconds } from './auth-util';
 
-const generateAuthCode = (key) => {
+const argv = minimist(process.argv.slice(2));
+
+const generateAuthCode = (key: string) => {
   if (key) {
-    return notp.gen(base32.decode(key));
+    return totp.gen(decode(key));
   }
   console.log('Empty Key');
   process.exit(1);
 };
 
-const copyToClipboard = (code) => {
-  clipboardy.writeSync(code);
+const copyToClipboard = (code: string) => {
+  writeSync(code);
 };
 
-const showPasscode = (key) => {
+const showPasscode = (key: string) => {
   const code = generateAuthCode(key);
   const remainingValidity = getRemainingValiditySeconds();
   console.log(
@@ -37,7 +39,7 @@ const showPasscode = (key) => {
   copyToClipboard(code);
 };
 
-const showUsage = () => console.log(
+const printUsageGuide = () => console.log(
   '\n Usage: \n\t acode [Options] \n\t Options:\n\t\t-a Add key\n\t\t-k [Key name] Get code for named key\n\t\t-r [Key name] Remove named key\n'
 );
 
@@ -46,7 +48,7 @@ const go = async () => {
   const configExists = hasExistingConfig();
   
   if (help || h) {
-    return showUsage();
+    return printUsageGuide();
   }
 
   if (a) {
@@ -56,7 +58,7 @@ const go = async () => {
   if (k) {
     if (typeof k !== "string") {
       console.log(`no key value provided`);
-      return showUsage();
+      return printUsageGuide();
     }
     if (configExists) {
       const item = getItem(k);
@@ -72,7 +74,7 @@ const go = async () => {
   if (r) {
     if (typeof r !== "string") {
       console.log(`no key value provided for removal`);
-      return showUsage();
+      return printUsageGuide();
     }
     if (configExists) {
       return removeItemFromConfig(r);
