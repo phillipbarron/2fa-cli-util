@@ -12,7 +12,7 @@ import {
 } from './config-manager';
 import decode from './lib/thirty-two';
 
-const { getRemainingValiditySeconds } = require('./auth-util');
+import { getRemainingValiditySeconds } from './auth-util';
 
 const argv = minimist(process.argv.slice(2));
 
