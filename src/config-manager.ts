@@ -1,10 +1,10 @@
 import { existsSync, readFileSync, writeFileSync } from "fs";
-import { prompt } from "inquirer";
+import inquirer from "inquirer";
 
 const CONFIG_FILE_PATH = `${process.env.HOME}/.2fa-cli-util`;
 
-const confirmAction = async (message) => {
-  const { userChoice } = await prompt([
+const confirmAction = async (message: string) => {
+  const { userChoice } = await inquirer.prompt([
     {
       type: "list",
       name: "userChoice",
@@ -33,13 +33,22 @@ const hasExistingConfig = () => {
   }
 };
 
-const getConfig = () => {
+export interface ConfigItem {
+  keyLabel: string;
+  name?: string;
+  key: string;
+}
+
+interface Configuration {
+  keys: ConfigItem[];
+}
+
+const getConfig = (): Configuration => {
   const rawdata = readFileSync(CONFIG_FILE_PATH, "utf-8");
-  return JSON.parse(rawdata);
+  return JSON.parse(rawdata) as Configuration;
 };
 
-
-const addItemToConfig = async (configItem) => {
+const addItemToConfig = async (configItem: ConfigItem) => {
   if (hasExistingConfig()) {
     const existingConfig = getConfig();
     const isExistingItem = existingConfig.keys.some(
@@ -69,22 +78,23 @@ const addItemToConfig = async (configItem) => {
     defaultKey: configItem.keyLabel,
   });
 };
-const removeItemFromConfig = async (configItem) => {
+const removeItemFromConfig = async (configItemLabel: string) => {
   if (hasExistingConfig()) {
     const existingConfig = getConfig();
     const isExistingItem = existingConfig.keys.some(
-      (item) => item.keyLabel.toLowerCase() === configItem.toLowerCase()
+      (item) => item.keyLabel.toLowerCase() === configItemLabel.toLowerCase()
     );
     if (isExistingItem) {
       const removeKey = await confirmAction(
-        `This will remove ${configItem} key value. Continue?`
+        `This will remove ${configItemLabel} key value. Continue?`
       );
       if (removeKey) {
         return updateConfigFile({
           ...existingConfig,
           ...{
             keys: existingConfig.keys.filter(
-              (key) => key.keyLabel.toLowerCase() !== configItem.toLowerCase()
+              (key) =>
+                key.keyLabel.toLowerCase() !== configItemLabel.toLowerCase()
             ),
           },
         });
@@ -95,7 +105,7 @@ const removeItemFromConfig = async (configItem) => {
     }
   }
   console.log(
-    `there is no "${configItem}" set. No changes made to configuration`
+    `there is no "${configItemLabel}" set. No changes made to configuration`
   );
 };
 
@@ -104,16 +114,11 @@ const getItems = () => {
   return keys.map((key) => key.keyLabel);
 };
 
-const getItem = (itemLabel) => {
+const getItem = (itemLabel: string) => {
   const { keys } = getConfig();
   return keys.find(
     (key) => key.keyLabel.toLowerCase() === itemLabel.toLowerCase()
   );
-};
-
-const getDefaultItem = () => {
-  const { defaultKey, keys } = getConfig();
-  return keys.find((key) => key.keyLabel === defaultKey);
 };
 
 export {
@@ -124,6 +129,5 @@ export {
   getItem,
   getItems,
   updateConfigFile,
-  getDefaultItem,
   confirmAction,
 };

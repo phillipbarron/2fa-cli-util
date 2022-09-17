@@ -1,4 +1,4 @@
-import { prompt } from 'inquirer';
+import inquirer from 'inquirer';
 import { yellow } from 'chalk';
 import { textSync } from 'figlet';
 
@@ -6,11 +6,11 @@ const { getItems, getItem, addItemToConfig } = require('./config-manager');
 
 const selectKey = async () => {
   const choices = await getItems();
-  const { key: keyLabel } = await prompt([
+  const { key: keyLabel } = await inquirer.prompt([
     {
       type: 'list',
       name: 'key',
-      message: 'What do you want a code for?',
+      message: 'Select key',
       choices: [...choices],
     },
   ]);
@@ -50,7 +50,7 @@ const addKey = async () => {
     },
   ];
 
-  const item = await prompt(keyQuestions);
+  const item = await inquirer.prompt(keyQuestions);
 
   addItemToConfig(item)
 };

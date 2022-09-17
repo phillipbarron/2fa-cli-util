@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 import { totp } from 'notp';
-import { decode }  from 'thirty-two';
 import { writeSync } from 'clipboardy';
 import minimist = require('minimist');
 import { selectKey, addKey, welcome } from './menu';
@@ -11,6 +10,7 @@ import {
   getItems,
   confirmAction,
 } from './config-manager';
+import decode from './lib/thirty-two';
 
 const { getRemainingValiditySeconds } = require('./auth-util');
 
