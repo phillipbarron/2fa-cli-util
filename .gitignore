@@ -2,3 +2,4 @@ node_modules
 yarn-error.log
 key-config.json
 dist
+.DS_Store

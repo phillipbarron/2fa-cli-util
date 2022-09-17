@@ -1,6 +1,6 @@
 {
   "name": "2fa-cli-util",
-  "version": "2.2.0",
+  "version": "2.2.2",
   "main": "dist/index.js",
   "author": "Phill Barron",
   "license": "MIT",
@@ -18,7 +18,7 @@
     "notp": "^2.0.3"
   },
   "bin": {
-    "acode": "./build/index.js"
+    "acode": "./dist/index.js"
   },
   "devDependencies": {
     "@types/figlet": "^1.5.5",
