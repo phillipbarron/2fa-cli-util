@@ -2,10 +2,10 @@ import inquirer from 'inquirer';
 import { yellow } from 'chalk';
 import { textSync } from 'figlet';
 
-const { getItems, getItem, addItemToConfig } = require('./config-manager');
+import { getItemLabels, getItem, addItemToConfig } from './config-manager';
 
 const selectKey = async () => {
-  const choices = await getItems();
+  const choices = getItemLabels();
   const { key: keyLabel } = await inquirer.prompt([
     {
       type: 'list',
@@ -18,15 +18,10 @@ const selectKey = async () => {
   return key;
 };
 
-
 const welcome = () => {
   console.clear();
-  console.log(
-    yellow.bgBlack(
-      textSync('2fa-cli-util')
-    )
-  )
-}
+  console.log(yellow.bgBlack(textSync('2fa-cli-util')));
+};
 
 const addKey = async () => {
   const keyQuestions = [
@@ -52,12 +47,7 @@ const addKey = async () => {
 
   const item = await inquirer.prompt(keyQuestions);
 
-  addItemToConfig(item)
+  await addItemToConfig(item);
 };
 
-
-export {
-  addKey,
-  selectKey,
-  welcome,
-};
+export { addKey, selectKey, welcome };

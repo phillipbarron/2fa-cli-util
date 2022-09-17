@@ -3,7 +3,7 @@ import inquirer from "inquirer";
 
 const CONFIG_FILE_PATH = `${process.env.HOME}/.2fa-cli-util`;
 
-const confirmAction = async (message: string) => {
+const confirmAction = async (message: string): Promise<boolean> => {
   const { userChoice } = await inquirer.prompt([
     {
       type: "list",
@@ -24,7 +24,7 @@ const updateConfigFile = async (config = {}) => {
   }
 };
 
-const hasExistingConfig = () => {
+const hasExistingConfig = (): boolean => {
   try {
     return existsSync(CONFIG_FILE_PATH);
   } catch (error) {
@@ -109,12 +109,12 @@ const removeItemFromConfig = async (configItemLabel: string) => {
   );
 };
 
-const getItems = () => {
+const getItemLabels = (): string[] => {
   const { keys } = getConfig();
   return keys.map((key) => key.keyLabel);
 };
 
-const getItem = (itemLabel: string) => {
+const getItem = (itemLabel: string): ConfigItem => {
   const { keys } = getConfig();
   return keys.find(
     (key) => key.keyLabel.toLowerCase() === itemLabel.toLowerCase()
@@ -127,7 +127,7 @@ export {
   addItemToConfig,
   removeItemFromConfig,
   getItem,
-  getItems,
+  getItemLabels,
   updateConfigFile,
   confirmAction,
 };

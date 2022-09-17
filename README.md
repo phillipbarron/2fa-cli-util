@@ -9,9 +9,9 @@ copies current 2fa code to the clipboard
 ```bash
     acode [Options] 
     Options:
-        -a Add Key
-        -k [Key Name] get code for named key
-        -r [Key Name] Remove named key
+        -a Add key
+        -k [Key name] get code for named key
+        -r [Key name] Remove named key
 ```
 
 * install globally
