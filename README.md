@@ -42,4 +42,4 @@ acode
 
 [try this](https://github.com/krissrex/google-authenticator-exporter)
 
-The is an [import script here](src/import.ts) which can map from the exported format to that require by this tool. Run from the command line with `yarn import` and then provide the path the exported file. 
+The is an [import script here](src/importer.ts) which can map from the exported format to that required by this tool. Run from the command line with `yarn import` and then provide the path the exported file. 
