@@ -35,7 +35,11 @@ acode
 ### todo
 
 * allow fetching / synchronisation of keys from secret manager or similar
+* Integrate import script to tool
+* Add checks for import (ie, is there existing config) and merge options.
 
 ### need to extract existing keys from Google auth?
 
 [try this](https://github.com/krissrex/google-authenticator-exporter)
+
+The is an [import script here](src/import.ts) which can map from the exported format to that require by this tool. Run from the command line with `yarn import` and then provide the path the exported file. 
