@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "go": "node dist/index.js",
-    "migrate": "ts-node src/importer.ts",
+    "import": "ts-node src/importer.ts",
     "lint": "yarn eslint .",
     "build": "tsc"
   },
