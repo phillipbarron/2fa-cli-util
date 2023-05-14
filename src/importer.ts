@@ -120,7 +120,7 @@ const configAlreadyExists = await hasExistingConfig();
     }
   }
   writeFileSync(
-    `${CONFIG_FILE_PATH}.new`,
+    `${CONFIG_FILE_PATH}`,
     JSON.stringify({ keys: asConfig }, null, 2),
   );
   console.log('config file created');
