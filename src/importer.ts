@@ -17,16 +17,20 @@ export interface ExportKeyItem {
   totpSecret: string;
 }
 
-interface Configuration {
-  keys: ConfigItem[];
-}
-
 const getAbsolutePath = (path: unknown) => {
   if (typeof path !== 'string') throw new Error('Path must be a string');
   if (path.startsWith('~'))
     return path.replace('~', process.env.HOME as string);
   return path;
 };
+
+function isExportKeyItem(arg: any): arg is ExportKeyItem {
+  return arg && arg.secret && typeof(arg.secret) == 'string'
+  &&  arg.name && typeof(arg.name) == 'string'
+  &&  arg.algorirthm && typeof(arg.algorirthm) == 'string'
+  &&  arg.totpSecret && typeof(arg.totpSecret) == 'string';
+}
+
 
 const hasExistingConfig = (): boolean => {
   try {
@@ -55,6 +59,18 @@ const migrate = async (): Promise<void> => {
   const config = JSON.parse(
     readFileSync(filePath, 'utf-8'),
   ) as ExportKeyItem[];
+
+  const configIsValid = config.every(isExportKeyItem);
+
+  if (!configIsValid) {
+    console.log('File does not contain valid configuratuion');
+    return;
+  }
+
+  if (config.length < 1) {
+    console.log('File does not contain any values');
+    return;
+  }
 
   const asConfig = config.map((item) => ({
     keyLabel: item.issuer || item.name,
