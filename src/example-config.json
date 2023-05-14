@@ -1,7 +1,7 @@
 {
     "keys" : [
       {
-        "keyLabel": "BBC Login",
+        "keyLabel": "Some Login",
         "key": "YOUR_SECRET_KEY"
       },
       {
