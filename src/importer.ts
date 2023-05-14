@@ -37,7 +37,7 @@ const hasExistingConfig = (): boolean => {
   }
 };
 
-const migrate = async () => {
+const migrate = async (): Promise<void> => {
   const fileLocation = [
     {
       type: 'input',
@@ -47,8 +47,13 @@ const migrate = async () => {
   ];
 
   const { imputFile } = await inquirer.prompt(fileLocation);
+  const filePath = getAbsolutePath(imputFile);
+  if (!existsSync(filePath)) {
+    console.log(`file '${filePath}' does not exist`);
+    return migrate();
+  } 
   const config = JSON.parse(
-    readFileSync(getAbsolutePath(imputFile), 'utf-8'),
+    readFileSync(filePath, 'utf-8'),
   ) as ExportKeyItem[];
 
   const asConfig = config.map((item) => ({
