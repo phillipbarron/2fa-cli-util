@@ -60,16 +60,16 @@ const migrate = async () => {
 const configAlreadyExists = await hasExistingConfig();
 
   if (configAlreadyExists) {
-    const EXIT = 'exit';
-    const REPLACE = 'replace existing config';
-    const BACKUP_AND_REPLACE = 'backup and replace existing config';
+    const EXIT = 'Exit';
+    const REPLACE = 'Replace existing config';
+    const BACKUP_AND_REPLACE = 'Backup and replace existing config';
     console.log("there is existing config - importing would overwrite");
     const { action } = await inquirer.prompt(
       [
         {
           type: 'rawlist',
           name: 'action',
-          message: 'Which is better?',
+          message: 'Choose action',
           choices: [EXIT, REPLACE, BACKUP_AND_REPLACE],
         },
       ]
@@ -93,6 +93,7 @@ const configAlreadyExists = await hasExistingConfig();
           `${CONFIG_FILE_PATH}`,
           JSON.stringify({ keys: asConfig }, null, 2),
         );
+        console.log('New config written');
         return;
       }
     }
