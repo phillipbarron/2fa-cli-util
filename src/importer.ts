@@ -13,7 +13,7 @@ export interface ExportKeyItem {
   secret: string;
   name: string;
   issuer?: string;
-  algorirthm: string;
+  algorithm: string;
   totpSecret: string;
 }
 
@@ -26,9 +26,9 @@ const getAbsolutePath = (path: unknown) => {
 
 function isExportKeyItem(arg: any): arg is ExportKeyItem {
   return arg && arg.secret && typeof(arg.secret) == 'string'
-  &&  arg.name && typeof(arg.name) == 'string'
-  &&  arg.algorirthm && typeof(arg.algorirthm) == 'string'
-  &&  arg.totpSecret && typeof(arg.totpSecret) == 'string';
+  && arg.name && typeof(arg.name) == 'string'
+  && arg.algorithm && typeof(arg.algorithm) == 'string'
+  && arg.totpSecret && typeof(arg.totpSecret) == 'string';
 }
 
 
@@ -45,25 +45,34 @@ const migrate = async (): Promise<void> => {
   const fileLocation = [
     {
       type: 'input',
-      name: 'imputFile',
+      name: 'inputFile',
       message: 'location of the exported file to migrate',
     },
   ];
 
-  const { imputFile } = await inquirer.prompt(fileLocation);
-  const filePath = getAbsolutePath(imputFile);
+  const { inputFile } = await inquirer.prompt(fileLocation);
+  const filePath = getAbsolutePath(inputFile);
+
   if (!existsSync(filePath)) {
     console.log(`file '${filePath}' does not exist`);
     return migrate();
   } 
+  
   const config = JSON.parse(
     readFileSync(filePath, 'utf-8'),
   ) as ExportKeyItem[];
 
+  if (Array.isArray(config)) {
+    for (const item of config) {
+      if (!isExportKeyItem(item)) {
+        console.log('invalid item:', item)
+      }
+    }
+  }
   const configIsValid = config.every(isExportKeyItem);
 
   if (!configIsValid) {
-    console.log('File does not contain valid configuratuion');
+    console.log('File does not contain valid configuration');
     return;
   }
 
