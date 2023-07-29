@@ -35,7 +35,7 @@ acode
 ### todo
 
 * allow fetching / synchronisation of keys from secret manager or similar
-* Integrate import script to tool
+* Integrate import script to tool [PARTIALLY COMPLETE]
 * Add checks for import (ie, is there existing config) and merge options.
 
 ### need to extract existing keys from Google auth?
